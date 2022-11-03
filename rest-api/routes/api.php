@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnimalsController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +32,15 @@ Route::put('/animals/{id}', [AnimalsController::class, 'update']);
 
 # method delete
 Route::delete('/animals/{id}', [AnimalsController::class, 'destroy']);
+
+# method get
+Route::get('/student', [StudentController::class, 'index']);
+
+# method post
+Route::post('/student', [StudentController::class, 'store']);
+
+# method put
+Route::put('/student/{id}', [StudentController::class, 'update']);
+
+# method delete
+Route::delete('/student/{id}', [StudentController::class, 'destroy']);
