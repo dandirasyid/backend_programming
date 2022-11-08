@@ -9,14 +9,23 @@ class StudentController extends Controller
 {
     public function index()
     {
+
         $students = Student::all();
 
-        $data = [
-            'message' => 'Get all student',
-            'data' => $students
-        ];
+        if (!$students->isEmpty()) {
+            $data = [
+                'message' => 'Get all student',
+                'data' => $students
+            ];
 
-        return response()->json($data, 200);
+            return response()->json($data, 200);
+        } else {
+            $data = [
+                'message' => 'Students Not Found'
+            ];
+
+            return response()->json($data, 404);
+        }
     }
 
     public function store(Request $request)
@@ -28,11 +37,19 @@ class StudentController extends Controller
             'jurusan' => $request->jurusan,
         ];
 
-        $student = Student::create($input);
+        foreach ($input as $key => $value) {
+            if (!$input[$key]) {
+                $data = [
+                    'message' => $key . ' is required',
+                ];
+
+                return response()->json($data, 404);
+            }
+        }
 
         $data = [
             'message' => 'Student is Creeated Sucessefully',
-            'data' => $student
+            'data' => Student::create($input)
         ];
 
         return response()->json($data, 201);
